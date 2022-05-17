@@ -1,0 +1,13 @@
+install.packages("tidyverse")
+library(tidyverse)
+tri <- tibble(x=c(0, 500,1000), y=c(0, 866.25, 0))
+count <- 0
+while (count < 20000) {
+  target <- sample(1:3, 1, replace=T)
+  ifelse(target==1, x1 <- (tri[[1,1]] + 0)/2, ifelse(target==2, x1 <- (tri[[1,1]] + 500)/2, x1 <- (tri[[1,1]] + 1000)/2))
+  ifelse(target==1, y1 <- (tri[[1,2]] + 0)/2, ifelse(target==2, y1 <- (tri[[1,2]] + 866)/2, y1 <- (tri[[1,2]] + 0)/2))
+  tri <- add_row(tri, x=x1, y=y1, .before=1)
+  count <- count + 1
+}
+triplot <- ggplot(data=tri, aes(x=x, y=y)) + geom_point(size=0.3)
+triplot
